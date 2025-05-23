@@ -16,6 +16,7 @@ import os
 import sys
 
 arguments = {"lang": None, "count": 1,}
+print(sys.argv[1:])
 
 for arg in sys.argv[1:]:
     if "=" in arg: #adicionado de acordo com o deep para rodar
