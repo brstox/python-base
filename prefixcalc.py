@@ -22,10 +22,16 @@ operação: sum
 n1: 5
 n2: 4
 9
+
+Os resultados serão salvos em 'prefixcalc.log'
 """
 __version__="0.1.0"
 
+import os
 import sys
+
+from datetime import datetime
+
 arguments = sys.argv[1:]
 
 if not arguments:
@@ -49,7 +55,6 @@ if operation not in valid_operations:
 validated_nums = []
 for num in nums:
     #TODO: repetição while + exceptions
-    
     if not num.replace(".", "").isdigit():
         print(f"Numero inválido {num}")
         sys.exit(1)
@@ -58,6 +63,7 @@ for num in nums:
     else:
         num = int(num)
     validated_nums.append(num)
+    
 n1, n2 = validated_nums
 
 # TODO: USAR DICT DE FUNCÕES
@@ -68,7 +74,15 @@ elif operation == "sub":
 elif operation == "mul":
     result = n1 * n2 
 elif operation == "div":
-    result = n1 / n2   
-    
+    result = n1 / n2 
+
+path = os.curdir
+filepath = os.path.join(path, "prefixcalc.log")
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
+
+with open(filepath, "a") as file_:
+    file_.write(f"{timestamp} - {user} -  {operation},{n1},{n2} = {result}\n")
+      
 print(f"O resultado é {result}") 
     
