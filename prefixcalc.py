@@ -34,6 +34,8 @@ from datetime import datetime
 
 arguments = sys.argv[1:]
 
+# validação
+
 if not arguments:
     operation = input("operação:")
     n1 = input("n1:")
@@ -44,7 +46,7 @@ elif len(arguments) !=3:
     print("ex:'sum 5 5'")
     sys.exit(1)
 
-operation, *nums =arguments
+operation, *nums = arguments
 
 valid_operations = ("sum", "sub", "mul", "div")
 if operation not in valid_operations:
@@ -63,8 +65,12 @@ for num in nums:
     else:
         num = int(num)
     validated_nums.append(num)
-    
-n1, n2 = validated_nums
+
+try:
+    n1, n2 = validated_nums
+except ValueError as e:
+    print(str(e))
+    sys.exit(1)
 
 # TODO: USAR DICT DE FUNCÕES
 if operation == "sum":
@@ -81,8 +87,13 @@ filepath = os.path.join(path, "prefixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv('USER', 'anonymous')
 
-with open(filepath, "a") as file_:
-    file_.write(f"{timestamp} - {user} -  {operation},{n1},{n2} = {result}\n")
-      
+try:
+    with open(filepath, "a") as file_:
+        file_.write(f"{timestamp} - {user} -  {operation},{n1},{n2} = {result}\n")
+except PermissionError as e:
+    #TODO: substituir por logging
+    print(str(e))
+    sys.exit(1)
+    
 print(f"O resultado é {result}") 
     
