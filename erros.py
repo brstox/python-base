@@ -12,7 +12,7 @@ try:
 except FileNotFoundError as e:
     print(f"{str(e)}.")
     sys.exit(1)
-    # Todo: usar retry
+    #TODO: usar retry
 else:
     print("sucesso!")
 finally:
